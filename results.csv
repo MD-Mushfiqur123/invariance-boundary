@@ -28,3 +28,9 @@ EXP11,BTL+REx-2env,NA,NA,0.6282,0.0291,reference (ID from EXP9 run)
 EXP11,+decorr-only-env,NA,NA,0.8222,0.0121,mu0 rho0
 EXP11,+shift-only-env,NA,NA,0.5529,0.0320,mu-0.7 rho0.9 hurts
 EXP11,+both,NA,NA,0.8278,0.0058,matches EXP9
+EXP12,Attn-control,0.7582,0.0142,0.4447,0.0318,ViT-lite ColoredMNIST
+EXP12,Attn+DAG,0.7600,0.0138,0.4471,0.0264,ViT-lite + acyclicity
+EXP13,IRMv1-2env,0.6882,0.0112,0.6325,0.0089,ColoredMNIST lam25
+EXP13,IRMv1-3env,0.6240,0.0243,0.6376,0.0253,+decorrelated env
+EXP13,GroupDRO-2env,0.9262,0.0072,0.1304,0.0238,collapse to shortcut
+EXP13,GroupDRO-3env,0.8319,0.0111,0.4479,0.0346,+decorrelated env

@@ -215,3 +215,44 @@ shortcut-breaking slices, not marginal covariate shifts.
 > Differentiable causal-structure learning contributes nothing in any regime.
 
 Paper draft added: PAPER_DRAFT.md (Nature MI narrative, contributions, gap list).
+
+# EXP12-EXP13: Sixth Round (2026-11-19) — architecture generality + stronger baselines
+
+## EXP12 — attention (ViT-lite) architecture, DAG null replication (5 seeds)
+
+| Model | ID | OOD |
+|---|---|---|
+| Attn-control (plain latent + REx 30) | 0.7582+-0.0142 | 0.4447+-0.0318 |
+| Attn+DAG (SCIN-style + acyclicity) | 0.7600+-0.0138 | 0.4471+-0.0264 |
+
+Delta = 0.002, overlapping CIs, all seeds within noise. The structural-learning null
+result replicates on a self-attention architecture — it is not a ReLU-MLP artifact.
+(Note: ViT-lite weaker than CNN at this scale; only relative DAG-vs-control matters.)
+
+## EXP13 — IRMv1 and GroupDRO baselines, ColoredMNIST (5 seeds)
+
+| Config | ID | OOD |
+|---|---|---|
+| IRMv1 lam=25, 2 envs | 0.6882+-0.0112 | 0.6325+-0.0089 |
+| IRMv1 lam=25, 3 envs | 0.6240+-0.0243 | 0.6376+-0.0253 |
+| GroupDRO-2env | 0.9262+-0.0072 | 0.1304+-0.0238 |
+| GroupDRO-3env | 0.8319+-0.0111 | 0.4479+-0.0346 |
+
+Reading against references (ERM 0.121 / V-REx(Equal to REx here)-2env 0.620 / ERM-3env 0.425 / V-REx-3env 0.680):
+1. IRMv1 ~= V-REx at 2 envs — both invariance penalties ride the same lever, as expected.
+2. Only V-REx benefits from the decorrelated third env (0.620 -> 0.680); IRMv1 does not (0.633 -> 0.638).
+3. GroupDRO collapses to the shortcut (0.130) — worst-group reweighting preserves runway
+   for a shortcut when P(y|shortcut) is stable across groups; consistent with theory.
+
+## Round 6 verdict — updated paper-strength assessment
+
+Gap list from PAPER_DRAFT.md: item 3 (baselines) and item 5 (architecture generality
+of the DAG null) now partially closed. Strongest current claim stack:
+
+> 1. Invariance and diversity are complementary levers (EXP10).
+> 2. Decorrelation is the sole active ingredient of diversity (EXP11).
+> 3. Structural learning null is architecture-general (EXP1/4/7/12).
+> 4. Not every invariance penalty uses diversity well (V-REx yes, IRMv1 no) (EXP13).
+
+Remaining before submission: real-world scientific benchmark, theory for (2),
+>=10 seeds, power analysis. These genuinely need a collaborator + GPU compute.

@@ -77,12 +77,13 @@ Status: draft v1.0 (2026-11-19). All numbers are from the experiments in this re
 2. **Theory.** A formal statement explaining why decorrelation (rather than generic
    diversity) is the operative factor, connecting to ICP/REx conditions; currently
    only mechanistic explanations exist.
-3. **Stronger baseline coverage** on the real-data benchmark (IRM variants, V-REx,
-   GroupDRO patterns, causal-feature baselines) before claiming generality.
+3. ~~Stronger baseline coverage~~ **done at toy scale** (EXP13): IRMv1 ~= V-REx;
+   GroupDRO collapses; only V-REx exploits the decorrelated env. Real-data benchmark
+   still needs baseline re-run.
 4. **Statistical power:** 3–5 seeds is adequate for the toy studies only; the
    real-data experiments need ≥10 seeds + CIs + effect sizes, pre-registered.
-5. **Negative-result robustness for the DAG claim:** one more architecture family
-   (e.g., attention-based) to show it is not a ReLU-MLP artifact.
+5. ~~Negative-result robustness for the DAG claim~~ **closed** (EXP12): null
+   replicates on attention/ViT-lite.
 
 ## Nature-format notes
 
