@@ -49,7 +49,7 @@ def make_envs(n_per_env=6000, seed=0):
     xtr, ytr, xte, yte = load_mnist()
     rng = np.random.default_rng(seed)
     data = {}
-    specs = {"e0": 0.9, "e1": 0.3, "test_id": 0.9, "test_ood": -0.9}
+    specs = {"e0": 0.9, "e1": 0.3, "e2": 0.0, "test_id": 0.9, "test_ood": -0.9}
     for k, rho in specs.items():
         xs, ys = (xtr, ytr) if k in ("e0", "e1") else (xte, yte)
         idx = rng.choice(len(xs), size=min(n_per_env if k in ("e0", "e1") else len(xs), len(xs)), replace=False)

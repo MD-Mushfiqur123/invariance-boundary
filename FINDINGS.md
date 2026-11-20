@@ -173,3 +173,45 @@ Findings:
 2. Sweep the size of the diversity gain: which single property of the extra env matters most (mu coverage? rho exposure? both?).
 3. Theory sketch: why do bottleneck+REx models exploit environment diversity better than ERM? (constrained-capacity + invariance objective = better use of rare environments)
 4. Write the paper skeleton around: "diversity lever" (positive), "structural learning does nothing" (negative), "phase boundary" (map).
+
+# EXP10-EXP11: Fifth Round (2026-11-19) — image replication + active ingredient
+
+## EXP10 — ColoredMNIST: diversity vs invariance, 5 seeds (shallow CNN)
+
+| Config | ID | OOD |
+|---|---|---|
+| ERM, 2 envs | 0.929 | 0.121+-0.025 |
+| ERM+REx lam=30, 2 envs | 0.747 | 0.620+-0.023 |
+| ERM, 3 envs (+decorrelated env rho=0) | 0.839 | 0.425+-0.037 |
+| **ERM+REx lam=30, 3 envs** | 0.735 | **0.680+-0.004** |
+| DFR (backbone + retrain head on e1) | 0.815 | 0.478+-0.030 |
+
+Image-data story differs from synthetic: here REx dominates and diversity only
+partially rescues ERM (0.425). Best = REx + diversity (0.680, tiny std, all seeds).
+DFR is not dominant. => diversity and invariance are COMPENSATORY levers, not
+substitutes; the image-vs-synthetic contrast is itself a finding.
+
+## EXP11 — which property of the extra environment matters? (synthetic, 5 seeds)
+
+OOD test at (mu=-1.5, rho=-0.9), majority baseline 0.863. BTL+REx, 2-env ref: 0.628 (adj -1.71).
+
+| Third training env | OOD | majority-adjusted |
+|---|---|---|
+| none | 0.628 | -1.71 |
+| **decorrelation only (mu=0, rho=0)** | **0.822+-0.012** | **-0.30** |
+| shift only (mu=-0.7, rho=+0.9) | 0.553+-0.032 | -2.26 (HURTS) |
+| both (mu=-0.7, rho=0) | 0.828+-0.006 | -0.26 |
+
+**THE active ingredient:** a single environment where the spurious feature is
+decorrelated from the label delivers the entire diversity benefit. An environment
+that shifts causal-feature distribution while preserving the shortcut adds nothing
+and actively harms (-2.26 < -1.71). Practical rule: environment budget should buy
+shortcut-breaking slices, not marginal covariate shifts.
+
+## Round 5 verdict + updated headline claim
+
+> Invariance and environment diversity are complementary levers; the *only* useful
+> property of a new environment (in this framework) is spurious-feature decorrelation.
+> Differentiable causal-structure learning contributes nothing in any regime.
+
+Paper draft added: PAPER_DRAFT.md (Nature MI narrative, contributions, gap list).

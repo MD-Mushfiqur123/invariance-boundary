@@ -1,0 +1,30 @@
+exp,config,id,sd_id,ood,sd_ood,note
+EXP1,ERM,0.9602,0.0008,0.5919,0.0078,synthetic baseline
+EXP1,ERM+REx,0.9566,0.0016,0.6038,0.0105,invariance only
+EXP1,SCIN-full,0.9434,0.0084,0.6756,0.0265,DAG+mask+REx
+EXP1,SCIN-noDAG,0.9358,0.0051,0.7007,0.0202,mask+REx
+EXP1,SCIN-noMask,0.9387,0.0033,0.6854,0.0107,DAG+REx
+EXP4,ERM,0.9728,0.0023,0.2277,0.0136,covariate shift task
+EXP4,ERM+REx,0.9685,0.0036,0.2672,0.0492,covariate shift task
+EXP4,SCIN-full,0.9488,0.0059,0.5853,0.0395,covariate shift task
+EXP4,SCIN-noDAG,0.9505,0.0052,0.5802,0.0354,covariate shift task
+EXP6,shallow/REx-off,0.9308,0.0086,0.1190,0.0293,ColoredMNIST
+EXP6,shallow/REx-30,0.7431,0.0077,0.6224,0.0247,ColoredMNIST
+EXP6,deep/REx-off,0.9222,0.0141,0.1481,0.0454,ColoredMNIST
+EXP6,deep/REx-30,0.7503,0.0127,0.6111,0.0331,ColoredMNIST
+EXP6,shallow/REx-100,0.7221,0.0100,0.6329,0.0157,ColoredMNIST
+EXP6,deep/REx-100,0.7227,0.0107,0.6403,0.0162,ColoredMNIST
+EXP7,SCIN-full-penalties-on,0.9209,0.0135,0.7497,0.0353,acyclicity enforced h(G)=0
+EXP7,SCIN-noDAG,0.9211,0.0129,0.7515,0.0321,synthetic
+EXP9,BTL+REx-2env,0.9450,0.0036,0.6282,0.0285,synthetic shift task
+EXP9,BTL+REx-3env,0.8579,0.0051,0.8278,0.0058,+interventional env
+EXP9,ERM-3env,0.8998,0.0066,0.7065,0.0157,+interventional env
+EXP10,ERM-2env,0.9292,0.0077,0.1205,0.0245,ColoredMNIST
+EXP10,REx-2env,0.7472,0.0089,0.6198,0.0229,ColoredMNIST
+EXP10,ERM-3env,0.8392,0.0116,0.4245,0.0372,+decorrelated env
+EXP10,REx-3env,0.7350,0.0088,0.6801,0.0037,+decorrelated env
+EXP10,DFR,0.8152,0.0111,0.4780,0.0301,ColoredMNIST
+EXP11,BTL+REx-2env,NA,NA,0.6282,0.0291,reference (ID from EXP9 run)
+EXP11,+decorr-only-env,NA,NA,0.8222,0.0121,mu0 rho0
+EXP11,+shift-only-env,NA,NA,0.5529,0.0320,mu-0.7 rho0.9 hurts
+EXP11,+both,NA,NA,0.8278,0.0058,matches EXP9
