@@ -24,6 +24,9 @@ contributes nothing measurable in any of four tested regimes.*
 | `exp4_propagation.py` | EXP4: intervention-propagation task (upstream covariate shift) |
 | `exp6_colored_mnist.py` | EXP6: depth × REx factorial on image data |
 | `exp8_phase_diagram.py` | EXP8: phase diagram (shortcut flip × covariate shift) |
+| `exp10_diversity_coloredmnist.py` | EXP10: environment diversity vs invariance on ColoredMNIST + DFR baseline |
+| `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
+| `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 
 EXP5 (depth mechanism isolation), EXP7 (active-acyclicity ablation), EXP9
 (environment diversity) are run via inline scripts documented in `FINDINGS.md`.
