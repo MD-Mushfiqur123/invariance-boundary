@@ -379,3 +379,31 @@ Reading:
 Status: BOTH benchmark families (ColoredMNIST EXP15, synthetic EXP16) now carry
 10-seed evidence. Every agent-completable item is closed. Remaining
 user-dependent: PR merge, proposal outreach, theory-partner check, real-data pilot.
+
+## Round 11 — solo real-data pilot harness (WILDS Camelyon17) ready
+
+User chose the solo-research path; COLLABORATION_EMAIL.md gained concrete
+self-serve routes (Open Problems in Single-Cell Analysis community — Discord
+intro + GitHub issue text ready to paste; WILDS public-data pilot; cold-email
+guidance with targeting tips).
+
+New: colab_wilds_pilot.py — self-contained Colab harness that runs the
+COLLABORATION_PROPOSAL.md pilot WITHOUT a partner, on public hospital data:
+
+  Step 1: per-hospital shortcut strength = accuracy of a linear probe predicting
+          the tumor label from cheap staining/scanner color proxies (per hospital,
+          subsampled). Hospitals 1-3 are trainable; hospital 4 is the wilds OOD split.
+  Step 2: paired configs (seeds x {ERM-2h: hospitals {1,2}, ERM-3h: {1,2,3}}),
+          ID = hospital 1-3 val patches, OOD = hospital 4.
+  Verdict: sign(dO OOD - OOD_2h) vs sign of hospital-3 shortcut gap to the
+  {1,2} mean — a direct real-data test of Prop 1'/EXP11's law.
+
+Smoke-tested end-to-end in the sandbox (random-tensor mode): probe, training,
+verdict printing, CSV write all pass. The real-data run is for the user's Colab
+(post 15 GB one-time download; T4, approx 30-60 min at --seeds 3).
+
+Honest limits: the pilot is a single paired comparison (hospital-3's strength is
+whatever it measures as) — if its strength sits near the {1,2} mean, the verdict
+is inconclusive by design and we extend to RxRx1 (16 experiments, more subset
+freedom). Proxy features (color/staining) are the standard site shortcut for
+scanner variation, but ground-truth spuriousness is unlabeled — report, not prove.
