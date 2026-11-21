@@ -12,6 +12,7 @@ Usage in Colab (one code cell):
 Outputs: prints a summary table and writes colab_results.csv (one row per
 seed x config x split). Download it via the Colab file browser and share it back.
 """
+__version__ = "v2-gpu-fix"
 import argparse
 import csv
 import gzip
@@ -172,6 +173,7 @@ def retrain_head_dfr(model, e1, epochs, bs, lr, seed):
         p.requires_grad = False
     torch.manual_seed(seed)
     m.head = nn.Sequential(nn.Flatten(), nn.Linear(1152, 64), nn.ReLU(), nn.Linear(64, 2)).to(DEVICE)
+    m = m.to(DEVICE)
     opt = torch.optim.Adam(m.head.parameters(), lr=lr)
     x = torch.tensor(e1[0], device=DEVICE)
     y = torch.tensor(e1[1], device=DEVICE)
@@ -211,7 +213,7 @@ def main():
     args = ap.parse_args()
 
     print(f"device={DEVICE} seeds={args.seeds} n_per_env={args.n_per_env} "
-          f"epochs={args.epochs} configs={args.configs}", flush=True)
+          f"epochs={args.epochs} harness={__version__} configs={args.configs}", flush=True)
     get_mnist()
 
     rows = []
