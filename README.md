@@ -32,6 +32,8 @@ contributes nothing measurable in any of four tested regimes.*
 | `THEORY_NOTES.md` | Proven theory: Lemmas 1–2, Propositions 1, 1', Corollary 1 + open sections |
 | `PAPER_FULL_DRAFT.md` | v2.0 full paper draft (Intro/Results/Discussion/Methods) |
 | `COLLABORATION_PROPOSAL.md` | 1-page pitch for domain partners (Perturb-seq/EHR/climate) |
+| `COLLABORATION_EMAIL.md` | Ready-to-send outreach email template |
+| `colab_synthetic_master.py` | Self-contained 10-seed GPU harness for the synthetic SCM battery |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 
