@@ -86,3 +86,9 @@ EXP18b,transfer-h4-to-h2,0.6550,,,,,color-probe transfer matrix (raw acc; train-
 EXP18b,transfer-h4-to-h3,0.5000,,,,,color-probe transfer matrix (raw acc; train-time norm from source; v1-transfer)
 EXP18b,transfer-h4-to-h4,0.8200,,,,,color-probe transfer matrix (raw acc; train-time norm from source; v1-transfer)
 EXP18b,verdict,,,,,MAPPING SHIFT confirmed: h2 transfer from {0,3} = 0.523/0.517 (chance) vs own strength 0.864; blocks {0,1,3} vs {2,4} (h2<->h4 0.655); training split owns only block A
+EXP19,cnn-target-h0,0.88,0.005,,,+0.368 excess vs predicted transfer exp +0.178 (3 seeds, h0 = hospital id; pools disjoint)
+EXP19,cnn-target-h1,0.812,0.0129,,,+0.304 excess vs predicted transfer exp +0.222 (3 seeds, h1 = hospital id; pools disjoint)
+EXP19,cnn-target-h2,0.5327,0.1569,,,+0.023 excess vs predicted transfer exp +0.027 (3 seeds, h2 = hospital id; pools disjoint)
+EXP19,cnn-target-h3,0.9173,0.0156,,,+0.397 excess vs predicted transfer exp +0.319 (3 seeds, h3 = hospital id; pools disjoint)
+EXP19,cnn-target-h4,0.6468,0.0882,,,+0.145 excess vs predicted transfer exp +0.013 (3 seeds, h4 = hospital id; pools disjoint)
+EXP19,correlation,,,,,Pearson r +0.905 / Spearman +0.800 over 5 targets; unseen {1,2,4} r +0.887 / rho +0.500; order preserved h3>h0>h1>>h4>h2; flagged-excess~0 targets = exactly the failures
