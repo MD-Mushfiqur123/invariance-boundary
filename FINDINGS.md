@@ -592,7 +592,7 @@ texture stats) to close the h4 gap; (b) RxRx1 replication as second dataset.
 Real-data arc CLOSED for this paper: EXP17 collapse -> EXP18 no weak env -> EXP18b
 mapping shift + two blocks -> EXP19 hardened prospective diagnostic (r = +0.88).
 
-### EXP20 (registered, pending Colab run) — RxRx1-WILDS second-dataset kill question
+### EXP20 (registered pre-run protocol — result follows below) — RxRx1-WILDS second-dataset kill question
 Harness: `colab_rxrx1_pilot.py` (v1-rxrx1; smoke-tested + fake-WILDS unit-tested with
 planted per-experiment color mappings — harness recovers the planted transfer pattern,
 r = +0.958 on the fake dataset, CNN follows the mapping shift).

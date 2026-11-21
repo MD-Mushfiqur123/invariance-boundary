@@ -17,7 +17,7 @@ learning, and a minutes-cheap clinical diagnostic built from it
 **Abstract (~180 words):**
 
 Environment-invariance methods promise out-of-distribution robustness, but the field
-treats "more environments" as monotonically better. Through fourteen pre-registered
+treats "more environments" as monotonically better. Through twenty pre-registered
 experiments spanning three architecture families and four penalty families, we show
 the benefit of environmental diversity is driven entirely by one ingredient:
 environments in which spurious features are decorrelated from the label. A single
@@ -49,7 +49,7 @@ validated on hospital histopathology
 Medical AI models routinely fail when transferred between hospitals, but teams cannot
 predict which transfer will fail or which new data would fix it. Here we answer both
 questions with a causal account of environment value in invariant learning. In
-fourteen controlled experiments we isolate the ingredient that makes additional data
+twenty controlled experiments we isolate the ingredient that makes additional data
 useful: decorrelation of spurious features from the label — not diversity per se —
 and we prove a quantitative law (residual shortcut leak proportional to
 sum(rho)/lambda) that turns "collect more sites" into a measurable decision. On the
