@@ -21,11 +21,11 @@ Reading:
     recombination of whole hospitals could decorrelate it (law boundary:
     the count of training environments is irrelevant if they all share rho).
   - Row 2 collapses toward chance -> hospital 2's P(tumor | color) differs
-    (the rho-flip family the law describes). Then EXP17's null delta is
-    explained: hospitals {0,3,4} share one mapping, so adding h4 leaves the
-    training shortcut internally consistent (no decorrelation, no gain), and
-    the fix would need a flipped training environment that Camelyon17 simply
-    does not offer.
+    from the training hospitals (the rho-flip family the law describes).
+    Also read the block structure: which hospitals are mutually compatible?
+    EXP17's null delta can then be read against where hospital 4 actually
+    sits (EXP18b on real data found h4 is ALSO incompatible with {0,3} —
+    Camelyon17 has two color-mapping blocks, {0,1,3} and {2,4}).
 
 Usage in Colab:
 
@@ -194,10 +194,10 @@ def main():
         print("hospital 2's CNN collapse cannot be a color-shortcut failure, and no recombination")
         print("of whole hospitals could decorrelate it: all training envs share one rho.")
     else:
-        print("\nREGIME: MAPPING SHIFT — hospital 2's P(tumor|color) differs from {0,3,4}.")
-        print("This EXPLAINS EXP17's null delta: {0,3,4} share one internally consistent shortcut,")
-        print("so adding h4 decorrelates nothing (no gain predicted, none observed); fixing OOD")
-        print("would need a flipped training environment, which Camelyon17 does not offer.")
+        print("\nREGIME: MAPPING SHIFT — hospital 2's P(tumor|color) differs from the training hospitals.")
+        print("Read the block structure above: if hospital 4 is ALSO in a different block from {0,3},")
+        print("then EXP17's null delta says a one-block arm was too weak to decorrelate; the two-block")
+        print("structure of this dataset is the measured form of the rho-flip regime.")
     print(f"\nwrote {args.out} — share it back (CSV has the full 5x5 matrix).")
 
 
