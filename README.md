@@ -38,6 +38,7 @@ contributes nothing measurable in any of four tested regimes.*
 | `colab_wilds_slidepilot.py` | EXP18: slide-level strengths in hospital 4 (negative design result) |
 | `colab_wilds_transfer.py` | EXP18b: cross-hospital shortcut transfer matrix (mapping-shift regime: blocks {0,1,3} vs {2,4}) |
 | `colab_wilds_predict.py` | EXP19: transfer matrix prospectively predicts per-hospital CNN collapse (r=+0.88, 10 seeds) |
+| `colab_rxrx1_pilot.py` | EXP20: pre-registered replication of the transfer diagnostic on RxRx1-WILDS (multiclass siRNA probe, 1139 classes; ~7.4 GB download) |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 
@@ -70,3 +71,14 @@ MNIST files are fetched from `ossci-datasets.s3.amazonaws.com` by `data_colored_
 ```
 
 Reported EXP15 numbers in `results.csv` and the paper draft come from this run.
+
+## Colab EXP20 (RxRx1, second dataset)
+
+```python
+!pip install -q wilds
+!wget -qO colab_rxrx1_pilot.py https://raw.githubusercontent.com/MD-Mushfiqur123/invariance-boundary/<SHA>/colab_rxrx1_pilot.py
+!python colab_rxrx1_pilot.py --seeds 10   # ~7.4 GB one-time download; check first print line = harness=v1-rxrx1
+```
+
+Smoke check first (`--smoke` needs no wilds or download); share back `rxrx1_pilot_results.csv` and the printed verdict block.
+

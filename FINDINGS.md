@@ -591,3 +591,24 @@ Registered follow-ups: (a) richer proxy feature set (color histograms + patch
 texture stats) to close the h4 gap; (b) RxRx1 replication as second dataset.
 Real-data arc CLOSED for this paper: EXP17 collapse -> EXP18 no weak env -> EXP18b
 mapping shift + two blocks -> EXP19 hardened prospective diagnostic (r = +0.88).
+
+### EXP20 (registered, pending Colab run) — RxRx1-WILDS second-dataset kill question
+Harness: `colab_rxrx1_pilot.py` (v1-rxrx1; smoke-tested + fake-WILDS unit-tested with
+planted per-experiment color mappings — harness recovers the planted transfer pattern,
+r = +0.958 on the fake dataset, CNN follows the mapping shift).
+
+Protocol (pre-registered, mirrors EXP19):
+- 3 source experiments, one per cell type (HEPG2/HUVEC/RPE), official train split;
+  disjoint probe pool (1500), CNN-train pool (4000) per source.
+- Up to 7 targets: <=3 held-out train-split experiments (predicted-favorable) +
+  4 test-split experiments (lab shift, regime unknown), disjoint 1000-image eval pools.
+- Probe: multiclass linear on the same 8-dim per-channel proxy -> 1139 siRNA classes;
+  train-time normalization carried over; predictor = mean accuracy from the 3 sources.
+- CNN: TorsoCNN -> 1139-class head, 10 seeds target; 96x96 downscaling.
+- VERDICT RULE: Pearson r over all targets vs Camelyon17's r = +0.88. Kill question:
+  r ~ 0 here while Camelyon17 holds r = +0.88 => the transfer diagnostic was
+  pathology-specific; high r => it generalizes beyond histopathology.
+- Known caveats before running: proxy features are 8-dim per-channel stats (weak for
+  siRNA texture patterns — a low-but-positive r is not a failure of the diagnostic if
+  the target ORDERING is preserved); test-split experiment coverage per cell type sets
+  the actual target count (harness reports it); download is ~7.4 GB.
