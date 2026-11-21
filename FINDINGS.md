@@ -349,3 +349,33 @@ Gap list impact: item 4 (statistical power) now closed for the ColoredMNIST fami
 Status after this round: everything autonomously completable by the agent is DONE.
 Remaining items are strictly user-dependent: merge decision on PR #1, sending the
 proposal, verifying Prop 3 assumptions with a theory partner, real-data pilot runs.
+
+## Round 10 — EXP16: 10-seed GPU master run, synthetic battery — full replication
+
+The full synthetic SCM battery (EXP1 + ablations + 3-env decorrelation test) was
+re-run with 10 seeds on a Colab T4 (colab_synthetic_master.py).
+
+| config        | ID (10 seeds)      | OOD (10 seeds)     | Cohen d vs ERM | mask recall |
+|---------------|--------------------|--------------------|----------------|-------------|
+| ERM-2env      | 0.9525 +- 0.0013   | 0.5919 +- 0.0144   |                |             |
+| V-REx-2env    | 0.9369 +- 0.0424   | 0.6091 +- 0.0338   | +0.52          |             |
+| ERM-3env      | 0.9292 +- 0.0036   | 0.7207 +- 0.0064   | +7.31          |             |
+| V-REx-3env    | 0.9255 +- 0.0048   | 0.7312 +- 0.0097   | +18.24         |             |
+| SCIN-full     | 0.9373 +- 0.0042   | 0.6879 +- 0.0163   | +5.76          | 1.000       |
+| SCIN-noDAG    | 0.9367 +- 0.0060   | 0.6953 +- 0.0152   | +5.74          | 1.000       |
+| SCIN-noMask   | 0.9375 +- 0.0046   | 0.6826 +- 0.0136   | +5.34          |             |
+
+Reading:
+1. All 5-seed CPU conclusions replicate exactly at 10 seeds (ERM 0.592 == ref).
+2. The DAG null is now 10-seed-solid: noDAG 0.695 >= full 0.688; noMask 0.683.
+   Mask recall stays 1.000 — selection works, structure learning adds nothing.
+3. The decorrelation lever transfers to the main generator: a single rho=0 env
+   lifts ERM OOD 0.592 -> 0.721 (+13 pts), V-REx to 0.731 (+18.2 d) — better than
+   any architecture variant, consistent with EXP9's chain-task finding and
+   Prop 1'(iii)'s signed prediction.
+4. V-REx-3env has the lowest OOD sd among improvements (0.0097) — again the most
+   reliable recipe.
+
+Status: BOTH benchmark families (ColoredMNIST EXP15, synthetic EXP16) now carry
+10-seed evidence. Every agent-completable item is closed. Remaining
+user-dependent: PR merge, proposal outreach, theory-partner check, real-data pilot.

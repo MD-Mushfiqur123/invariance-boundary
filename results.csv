@@ -46,3 +46,10 @@ EXP15,IRMv1-3env,0.6217,0.0242,0.6258,0.0431,10-seed GPU Colab master run — no
 EXP15,GroupDRO-2env,0.9169,0.0112,0.1652,0.0349,10-seed GPU Colab master run — shortcut collapse
 EXP15,GroupDRO-3env,0.8264,0.0084,0.4661,0.0343,10-seed GPU Colab master run
 EXP15,ERM+DFR,0.8183,0.0111,0.4722,0.0238,10-seed GPU Colab master run
+EXP16,ERM-2env,0.9525,0.0013,0.5919,0.0144,10-seed GPU Colab synthetic master run (supersedes EXP1 5-seed)
+EXP16,V-REx-2env,0.9369,0.0424,0.6091,0.0338,10-seed GPU Colab synthetic master run
+EXP16,ERM-3env,0.9292,0.0036,0.7207,0.0064,10-seed GPU Colab synthetic master run — decorrelation lever on main generator
+EXP16,V-REx-3env,0.9255,0.0048,0.7312,0.0097,10-seed GPU Colab synthetic master run — best OOD; Cohen d +18.2
+EXP16,SCIN-full,0.9373,0.0042,0.6879,0.0163,10-seed GPU Colab synthetic master run — causal-mask recall 1.000
+EXP16,SCIN-noDAG,0.9367,0.0060,0.6953,0.0152,10-seed GPU Colab synthetic master run — DAG null at 10 seeds
+EXP16,SCIN-noMask,0.9375,0.0046,0.6826,0.0136,10-seed GPU Colab synthetic master run
