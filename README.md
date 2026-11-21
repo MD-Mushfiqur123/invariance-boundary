@@ -28,6 +28,7 @@ contributes nothing measurable in any of four tested regimes.*
 | `exp12_attention_null.py` | EXP12: DAG null on attention/ViT-lite |
 | `exp13_stronger_baselines.py` | EXP13: IRMv1 and GroupDRO baselines |
 | `exp14_theory_check.py` | EXP14: numeric verification of Prop 1/1' (linear V-REx leak law) |
+| `colab_master_run.py` | Self-contained GPU/Colab harness: all 9 ColoredMNIST configs, configurable seeds, writes `colab_results.csv` |
 | `THEORY_NOTES.md` | Proven theory: Lemmas 1–2, Propositions 1, 1', Corollary 1 + open sections |
 | `PAPER_FULL_DRAFT.md` | v2.0 full paper draft (Intro/Results/Discussion/Methods) |
 | `COLLABORATION_PROPOSAL.md` | 1-page pitch for domain partners (Perturb-seq/EHR/climate) |
