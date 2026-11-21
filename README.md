@@ -13,7 +13,7 @@ contributes nothing measurable in any of four tested regimes.*
 
 | File | Purpose |
 |---|---|
-| `FINDINGS.md` | All results (EXP1–EXP9), verdicts, threats to validity, next steps |
+| `FINDINGS.md` | All results (EXP1–EXP14), verdicts, threats to validity, next steps |
 | `LITERATURE_DELTA.md` | Novelty gap analysis vs 2022–2025 literature |
 | `data_scm.py` | Synthetic SCM data (causal + spurious + nuisance latents, nonlinear mixing) |
 | `data_colored_mnist.py` | ColoredMNIST pipeline (2-channel, shortcut flip OOD) |
@@ -25,6 +25,12 @@ contributes nothing measurable in any of four tested regimes.*
 | `exp6_colored_mnist.py` | EXP6: depth × REx factorial on image data |
 | `exp8_phase_diagram.py` | EXP8: phase diagram (shortcut flip × covariate shift) |
 | `exp10_diversity_coloredmnist.py` | EXP10: environment diversity vs invariance on ColoredMNIST + DFR baseline |
+| `exp12_attention_null.py` | EXP12: DAG null on attention/ViT-lite |
+| `exp13_stronger_baselines.py` | EXP13: IRMv1 and GroupDRO baselines |
+| `exp14_theory_check.py` | EXP14: numeric verification of Prop 1/1' (linear V-REx leak law) |
+| `THEORY_NOTES.md` | Proven theory: Lemmas 1–2, Propositions 1, 1', Corollary 1 + open sections |
+| `PAPER_FULL_DRAFT.md` | v2.0 full paper draft (Intro/Results/Discussion/Methods) |
+| `COLLABORATION_PROPOSAL.md` | 1-page pitch for domain partners (Perturb-seq/EHR/climate) |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 

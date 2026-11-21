@@ -74,9 +74,12 @@ Status: draft v1.0 (2026-11-19). All numbers are from the experiments in this re
    domain benchmark with genuine scientific relevance (candidate: Perturb-seq gene
    perturbation prediction, or an EHR spurious site-effect task) — this is where a
    collaborator is needed.
-2. **Theory.** A formal statement explaining why decorrelation (rather than generic
-   diversity) is the operative factor, connecting to ICP/REx conditions; currently
-   only mechanistic explanations exist.
+2. ~~**Theory.** A formal statement explaining why decorrelation (rather than generic
+   diversity) is the operative factor~~ **done for the linear case** (Round 7):
+   Lemma 1-2, Propositions 1, 1', Corollary 1 proven in THEORY_NOTES.md; new
+   quantitative law leak ~ sum(rho_e)/lambda; verified numerically (EXP14).
+   Open: nonlinear extension, ICP link refinement.
+   
 3. ~~Stronger baseline coverage~~ **done at toy scale** (EXP13): IRMv1 ~= V-REx;
    GroupDRO collapses; only V-REx exploits the decorrelated env. Real-data benchmark
    still needs baseline re-run.

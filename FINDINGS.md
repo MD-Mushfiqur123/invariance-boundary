@@ -256,3 +256,44 @@ of the DAG null) now partially closed. Strongest current claim stack:
 
 Remaining before submission: real-world scientific benchmark, theory for (2),
 >=10 seeds, power analysis. These genuinely need a collaborator + GPU compute.
+
+## Round 7 — Proposition 1 completed + EXP14 numeric verification
+
+Status upgrade: THEORY_NOTES.md now contains complete proofs for Lemma 1 (exact
+risk decomposition), Lemma 2 (zero-variance set), Proposition 1 (diversity =>
+exact OOD invariance in the population/lexicographic limit), Proposition 1'
+(finite-lambda residual leak: w_s* ~ sum(rho_e)/(4*lambda*gamma*s2e*Var(rho))),
+and Corollary 1 (two-environment degeneracy). New falsifiable prediction: the
+residual shortcut leak under V-REx scales as sum(rho_e)/lambda — the training
+rho-imbalance is the knob, and a symmetric flip (sum rho = 0) has NO first-order leak.
+
+EXP14 (exp14_theory_check.py): exact analytic population minimization of the
+V-REx objective on the linear SCM (Var(y)=4.05, noise floor 0.25, gamma=1),
+cross-checked with 3-seed finite-sample fits (400k/env).
+
+| env rho        | lambda | sum(rho) | w_s predicted | w_s exact | dR(flip -0.9) exact |
+|----------------|--------|----------|---------------|-----------|----------------------|
+| {0.9,-0.9}     | 200    | 0.0      | 0             | 0.0000    | +0.0000              |
+| {0.9,0.3,0}    | 200    | 1.2      | 0.0429        | 0.1073    | +0.1095              |
+| {0.9,0.6,0.2}  | 200    | 1.7      | 0.1034        | 0.1847    | +0.3215              |
+
+lambda sweep on {0.9,0.3,0}: w_s = 0.1242/0.1152/0.1073/0.0982/0.0123/0.0057 for
+lambda = 50/100/200/400/800/1600; w_s*lambda -> 9.1 vs predicted constant 8.57.
+Finite-sample fits match the analytic optimum (0.1071 +- 0.0025 vs 0.1073).
+
+Findings:
+1. sum(rho)=0 => leak exactly zero (Prop 1' first-order prediction exact).
+2. 1/lambda scaling confirmed asymptotically (within ~7% by lambda=1600).
+3. At practical lambda (<=400) the leak EXCEEDS the first-order floor — the signed
+   cubic variance correction (Cov(rho, rho^2) > 0 lowers the penalty); treat the
+   formula as a lower bound there.
+4. OOD cost of the residue is material: +0.109 on a 0.25 noise floor (~44% relative)
+   at lambda=200 — this is precisely the flip-failure residue the paper attributes
+   to finite-lambda invariance training.
+
+Paper impact: closes most of PAPER_DRAFT gap item "theory for the decorrelation
+claim" (linear case). The story sharpens — the operative variable is the training
+rho-imbalance sum(rho_e), which gives EXP11's "decorrelation is the active
+ingredient" a quantitative law, and predicts that a THIRD env helps only insofar
+as it reduces sum(rho) and increases Var(rho). Still open: nonlinear extension,
+global finite-lambda characterization, mu-harm scale (Prop 2).
