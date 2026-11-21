@@ -407,3 +407,27 @@ whatever it measures as) — if its strength sits near the {1,2} mean, the verdi
 is inconclusive by design and we extend to RxRx1 (16 experiments, more subset
 freedom). Proxy features (color/staining) are the standard site shortcut for
 scanner variation, but ground-truth spuriousness is unlabeled — report, not prove.
+
+### Colab crash + v2-fieldfix (post-download bug, now fixed)
+User's Colab run downloaded the 15 GB archive fine but crashed at
+`ds.metadata_fields.index("tumor")` -> ValueError. Verified against the wilds
+source (wilds/datasets/camelyon17_dataset.py):
+- metadata_fields are `['hospital', 'slide', 'y', 'from_source_domain']`; the
+  tumor label lives under `'y'` (pandas 'tumor' column is copied into y_array
+  AND metadata col 2 asserts y_size==1 -> 'y' in fields).
+- hospitals are 0-INDEXED: training hospitals 0/3/4, ID-val center 1, OOD test
+  center 2 (the paper's 1-indexed scheme calls the test hospital "5"). The old
+  script's {1,2,3}/4 mapping would have silently grabbed (mostly empty) pools
+  even without the field crash.
+- Second latent bug caught on review: PIL patches arrive HWC (96,96,3); the
+  old loader stacked them without permuting -> Conv2d would have crashed on
+  (N,96,96,3). Fixed via NDIM check + permute(2,0,1).
+
+Fix (harness v2-fieldfix): dynamic field resolution ('y'/'tumor', 'hospital'/
+'center'/fallbacks) with explicit error listing metadata_fields; global-index
+selection straight off the base dataset (no subset/index-offset confusion);
+hospitals 1,2 drawn as disjoint slices of one {0,3} pool; ID = further disjoint
+{0,3} patches; OOD = hospital 2; y >= -1 invalid labels masked. Data already at
+data/camelyon17_v1.0 is reused (no re-download).
+Verified: sandbox --smoke pass plus a fake-wilds unit test (NCHW shape, h1/h2
+disjoint, id disjoint from pool, y=-1 masked, clear error when fields missing).

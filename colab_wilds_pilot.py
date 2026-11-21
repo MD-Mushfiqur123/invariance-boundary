@@ -23,6 +23,13 @@ Usage in Colab (T4 GPU):
 
 Sandbox smoke mode (--smoke) uses random tensors instead of wilds data to
 verify all training/eval code paths without the download.
+
+WILDS API facts (verified from wilds/datasets/camelyon17_dataset.py):
+  - metadata_fields = ['hospital', 'slide', 'y', 'from_source_domain']
+    (the tumor label lives in metadata under name 'y', NOT 'tumor').
+  - hospitals are 0-INDEXED: training hospitals are 0, 3, 4; the held-out
+    ID-val hospital is 1; the OOD test hospital is 2 (the WILDS paper label
+    calls the test hospital 5 in a 1-indexed scheme).
 """
 import argparse
 import csv
@@ -35,7 +42,7 @@ import torch.nn.functional as F
 
 warnings.filterwarnings("ignore")
 
-__version__ = "v1-pilot"
+__version__ = "v2-fieldfix"
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 IMG = 96
 
@@ -115,25 +122,51 @@ def load_smoke(n_per=600, seed=0):
 
 
 def load_wilds(subsample=5000, seed=0):
-    print("loading camelyon17-wilds (~15 GB, one-time download)...", flush=True)
+    print("loading camelyon17-wilds (reuses data/camelyon17_v1.0 if already downloaded)...", flush=True)
     from wilds import get_dataset
     ds = get_dataset("camelyon17", download=True)
+    print(f"metadata fields: {list(ds.metadata_fields)}", flush=True)
     rng = np.random.default_rng(seed)
-    H = ds.metadata_fields.index("hospital")
-    Y = ds.metadata_fields.index("tumor")
+    fields = list(ds.metadata_fields)
+
+    def field(*names):
+        for nm in names:
+            if nm in fields:
+                return fields.index(nm)
+        raise ValueError(f"none of {names} found in metadata fields {fields}")
+
+    H = field("hospital", "center", "site")
+    Y = field("y", "tumor")
+    md = ds.metadata_array.numpy()
+    y = ds.y_array.numpy().flatten().astype(np.int64)
+    for h in sorted(set(md[:, H].tolist())):
+        n_ok = int(((md[:, H] == h) & (y >= 0)).sum())
+        print(f"  hospital {h}: {n_ok} labeled patches", flush=True)
     data = {}
 
-    def grab(subset, hospitals, n, key):
-        md = subset.metadata_array.numpy()
-        mask = np.isin(md[:, H], hospitals) & (md[:, Y] >= 0)
-        idxs = rng.choice(np.where(mask)[0], size=min(n, mask.sum()), replace=False)
-        imgs = torch.stack([torch.tensor(np.asarray(subset[int(i)][0])) for i in idxs])
-        data[key] = (imgs.float()[:, :, :IMG, :IMG], torch.tensor(md[idxs, Y]).long())
+    def grab(idxs, key):
+        arrs = []
+        for i in idxs:
+            a = np.asarray(ds[int(i)][0])
+            arrs.append(torch.tensor(a).permute(2, 0, 1) if a.ndim == 3 else torch.tensor(a))
+        imgs = torch.stack(arrs)
+        data[key] = (imgs.float()[:, :, :IMG, :IMG], torch.tensor(y[idxs]).long())
+        print(f"  -> {key}: {len(idxs)} patches", flush=True)
 
-    for h in (1, 2, 3):
-        grab(ds.get_subset("train"), (h,), subsample, h)
-    grab(ds.get_subset("val"), (1, 2, 3), subsample // 2, "id")
-    grab(ds.get_subset("test"), (4,), subsample, "ood")
+    def pick(hospitals, n, key, exclude=None):
+        mask = np.isin(md[:, H], hospitals) & (y >= 0)
+        if exclude is not None and len(exclude):
+            mask[exclude] = False
+        idxs = rng.choice(np.where(mask)[0], size=min(n, int(mask.sum())), replace=False)
+        grab(idxs, key)
+        return idxs
+
+    pool = pick((0, 3), 2 * subsample, "h1_pool")
+    grab(pool[:subsample], 1)
+    grab(pool[subsample:2 * subsample], 2)
+    pick((4,), subsample, 3)
+    pick((2,), subsample, "ood")
+    pick((0, 3), subsample // 2, "id", exclude=pool)
     return data, "wilds"
 
 
@@ -158,6 +191,7 @@ def main():
         print(f"  hospital {k}: shortcut strength {strengths[k]:.3f}", flush=True)
     print(f"  {{1,2}} mean = {np.mean([strengths[1], strengths[2]]):.3f}", flush=True)
 
+    print("\n(hospital keys 1,2 = wilds hospitals 0,3; 3rd = wilds 4; OOD = wilds 2; ID = disjoint {0,3} patches)", flush=True)
     print("\nStep 2 — paired training ({1,2} vs {1,2,3}):", flush=True)
     rows = []
     res = {c: {"id": [], "ood": []} for c in ("ERM-2h", "ERM-3h")}
