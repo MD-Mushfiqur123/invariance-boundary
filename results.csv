@@ -58,3 +58,5 @@ EXP17,ERM-3h,0.8953,0.0102,0.4622,0.1109,+3rd hosp 4; delta OOD -0.0485+-0.2051;
 EXP17,shortcut-strength-h0,0.825,,,,color/staining proxy linear probe (8-dim channel stats)
 EXP17,shortcut-strength-h3,0.819,,,,
 EXP17,shortcut-strength-h4,0.820,,,,
+EXP18,slide-strength-h4-valid,0.963,,,,"only class-balanced slides 47 (0.963) and 49 (0.983); slides 40-46,48 tumor-saturated (minority<=0.083, strengths are majority-baseline artifacts); pre-registered weak-vs-strong arms infeasible — negative design result"
+EXP18,slide-strength-h4-balanced,0.983,,,,balanced-slide strength above whole-hospital 0.820 (slide-level class structure dilutes hospital probe)

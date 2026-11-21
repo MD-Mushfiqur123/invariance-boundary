@@ -470,3 +470,35 @@ strength and arms the paired design: add hospital-4 patches from WEAK-shortcut
 slides vs STRONG-shortcut slides → does delta(weak) > delta(strong)? This gives the
 law its missing real-data test across a strength range (with the slide-tumor-content
 confound reported alongside).
+
+### EXP18 (slide-level arms) — pre-registered design INFEASIBLE on hospital 4 (recorded negative)
+Per-slide strengths in hospital 4 (probe n=600): slides 40-46 and 48 are tumor-
+saturated (minority rate 0.000-0.083; their "strengths" 0.947-0.990 are
+majority-baseline artifacts), while the only class-balanced slides (47, 49:
+minority 0.397/0.398) measure 0.963/0.983. So the weak-shortcut regime does not
+exist at slide granularity either — every usable slice is at 0.95+ vs the {0,3}
+hospital mean 0.822. The pre-registered weak-vs-strong arm comparison
+(collab: delta_weak > delta_strong) has no power (arm gap 0.95 vs 0.97) and the
+harness correctly refused to run (needs 4 balanced slides, found 2).
+
+Secondary observation: within-balanced-slide color->tumor strength (0.96+) is
+HIGHER than the whole-hospital 0.820 — the hospital-level probe is partially
+diluted by slide-level class structure.
+
+This is the second consecutive real-data regime miss: hospital level ~= equal
+strengths (EXP17), slide level = all strong (EXP18). The open question is no
+longer "can we find a weak environment in Camelyon17" (answer: no, twice) but
+WHICH law regime hospital 2's shift belongs to — that decides whether any
+recombination of whole hospitals could ever have helped.
+
+### EXP18b — cross-hospital shortcut transfer matrix (new harness, probes only, ~2-3 min)
+colab_wilds_transfer.py: 8-dim color/staining probe trained on hospital i,
+tested on hospital j (train-time normalization carried over — no test-set
+refitting), full 5x5 matrix (train {0,3}, third 4, ID-val 1, OOD 2), diagonal =
+strength, off-diagonal = P(tumor|color) mapping transfer, cells reported raw +
+majority-adjusted. Decision rule: row-2 transfer from {0,3,4} >= 0.9*diag ->
+MAPPING STABLE (hospital 2's collapse is not a color failure; no hospital
+recombination could decorrelate it); else MAPPING SHIFT (hospital 2's P(tumor|
+color) differs — the rho-flip family; explains EXP17's null delta because
+{0,3,4} share one internally consistent shortcut, and the fix would need a
+flipped training env that Camelyon17 does not offer).
