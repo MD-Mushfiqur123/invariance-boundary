@@ -47,3 +47,45 @@ Best regards,
 - সাথে COLLABORATION_PROPOSAL.md (PDF/export করে) attach করো
 - প্রার্থী: যেকোনো computational biology / clinical AI গ্রুপ, বা বিশ্ববিদ্যালয়ের
   অধ্যাপক যার কাছে Perturb-seq বা মাল্টি-সাইট EHR ডেটা আছে
+
+---
+
+# কেউ চেনা না থাকলে: তিনটা self-serve রাস্তা
+
+## A. Open Problems in Single-Cell Analysis (সবচেয়ে বাস্তবসম্মত, আজই শুরু করা যায়)
+
+[openproblems.bio](https://openproblems.bio) — ওপেন-সোর্স single-cell benchmarking
+কমিউনিটি (CZI-supported, Nature Biotechnology 2025 paper)। **নতুন contribution-এর
+জন্য স্পষ্টভাবে ওপেন**, প্রথমবারের contributors-দের স্বাগতম বলে নিজেরাই বলে।
+
+ধাপ:
+1. তাদের [Discord](https://openproblems.bio)-এ ঢুকে নিচের intro-টা পোস্ট করো:
+
+   > 👋 Hi! I'm an independent ML researcher. I've built and proven (linear-case)
+   > a controlled theory of WHEN adding a training environment helps invariance-based
+   > OOD generalization: the active ingredient is shortcut decorrelation, not generic
+   > diversity — verified at 10 seeds on two benchmark families. I'd love to
+   > contribute a new benchmark task here: "predict-from-a-decorrelated-batch" —
+   > a task where spurious batch-label correlation flips across collection contexts.
+   > Happy to draft the task spec + methods. Which channel/issue is best to start?
+
+2. তাদের [GitHub রিপোতে](https://github.com/openproblems-bio/openproblems) একটা issue
+   খোলো, টাইটেল: `Proposal: new task — batch/protocol-shift with decorrelated label
+   structure`. বডিতে COLLABORATION_PROPOSAL.md-এর পাইলট ডিজাইন সংক্ষেপ দাও।
+3. community@openproblems.bio-তে ওই একই প্রস্তাব ইমেইল করো (ওরা code of conduct-সহ
+   স্বাগতম-সংস্কৃতির কমিউনিটি)।
+
+## B. Public ডেটাতে পাইলট — কোনো সহযোগীই লাগবে না
+
+WILDS বেঞ্চমার্ক ([wilds.stanford.edu](https://wilds.stanford.edu), Camelyon17 =
+৫টা হাসপাতাল; RxRx1 = lab-batch confound) ওপেন ডাউনলোড, Colab-এ চলে। আমাদের
+EXP15/16-এর মতো paired design ওখানেই চালানো যায় — তুমি চাইলে আমি
+`colab_wilds_pilot.py` হারনেস বানাব। এটাই প্রস্তাবে "pilot completed" স্ট্যাটাস
+আনার সবচেয়ে দ্রুত রাস্তা।
+
+## C. Cold email — পরিচিত হওয়া লাগে না
+
+উপরের টেমপ্লেট পাঠাও: (i) single-cell/OOD-এ সদ্য পাবলিশ করা assistant professors
+(ওরা সবচেয়ে দ্রুত রিপ্লাই দেয়), (ii) যেসব ল্যাবের পেপার আমরা LITERATURE_DELTA.md-
+তে cite করেছি — তাদের কাছে আমাদের ফল নিজেই গুরুত্বপূর্ণ। প্রতি বার্তায় এক লাইনে
+ওদের নিজের পেপারের রেফারেন্স যোগ করো।
