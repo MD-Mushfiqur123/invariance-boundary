@@ -80,8 +80,11 @@ Best regards,
 WILDS বেঞ্চমার্ক ([wilds.stanford.edu](https://wilds.stanford.edu), Camelyon17 =
 ৫টা হাসপাতাল; RxRx1 = lab-batch confound) ওপেন ডাউনলোড, Colab-এ চলে। আমাদের
 EXP15/16-এর মতো paired design ওখানেই চালানো যায় — তুমি চাইলে আমি
-`colab_wilds_pilot.py` হারনেস বানাব। এটাই প্রস্তাবে "pilot completed" স্ট্যাটাস
-আনার সবচেয়ে দ্রুত রাস্তা।
+`colab_wilds_pilot.py` হারনেস বানাব। **আপডেট: পাইলট এখন চলে গেছে (EXP17)** —
+WILDS Camelyon17-এ hospital-shift collapse রেপ্লিকেট হয়েছে (ID 0.886 → OOD 0.511,
+chance), আর তৃতীয় হাসপাতাল null-regime (gap −0.002 → ΔOOD ≈ 0) আইনের সাথে
+সামঞ্জস্যপূর্ণ। slide-level EXP18 চলছে; তাই "real-data pilot" স্ট্যাটাস =
+**in progress, real data সহ**।
 
 ## C. Cold email — পরিচিত হওয়া লাগে না
 

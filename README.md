@@ -34,6 +34,8 @@ contributes nothing measurable in any of four tested regimes.*
 | `COLLABORATION_PROPOSAL.md` | 1-page pitch for domain partners (Perturb-seq/EHR/climate) |
 | `COLLABORATION_EMAIL.md` | Ready-to-send outreach email template |
 | `colab_synthetic_master.py` | Self-contained 10-seed GPU harness for the synthetic SCM battery |
+| `colab_wilds_pilot.py` | EXP17: real-data paired pilot on Camelyon17-WILDS (hospital-shift; v2-fieldfix) |
+| `colab_wilds_slidepilot.py` | EXP18: slide-level weak-vs-strong shortcut arms within hospital 4 (same cached data) |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 

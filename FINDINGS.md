@@ -431,3 +431,42 @@ hospitals 1,2 drawn as disjoint slices of one {0,3} pool; ID = further disjoint
 data/camelyon17_v1.0 is reused (no re-download).
 Verified: sandbox --smoke pass plus a fake-wilds unit test (NCHW shape, h1/h2
 disjoint, id disjoint from pool, y=-1 masked, clear error when fields missing).
+
+### EXP17 — WILDS Camelyon17 real-data pilot (first real-data result, 3 seeds)
+Paired design executed on the 15 GB public download (v2-fieldfix): base pair =
+wilds hospitals {0,3} (disjoint patches), 3rd = hospital 4, ID = further disjoint
+{0,3} patches, OOD = hospital 2 (the WILDS test hospital). Per-hospital shortcut
+strength (color/staining 8-dim proxy probe, 5000 patches each): h0 0.825, h3 0.819,
+h4 0.820 — strengths are nearly identical across hospitals.
+
+Results (mean ± sd, 3 seeds):
+| config | ID | OOD |
+|---|---|---|
+| ERM-2h | 0.886 ± 0.023 | 0.511 ± 0.117 |
+| ERM-3h | 0.895 ± 0.010 | 0.462 ± 0.111 |
+
+delta OOD (3h − 2h) = −0.049 ± 0.205.
+
+Reading (pre-registered rule: sign(delta) vs sign(h4-strength − {h0,h3} mean)):
+the h4 gap is −0.002 — exactly the "sits near the {1,2} mean" case we declared
+inconclusive by design. The sign test has ~zero power at 3 seeds with OOD sd 0.12.
+Honest verdict: **the sign test is inconclusive; nothing here contradicts the law.**
+Two real findings worth keeping:
+1. **Real-data replication of the core phenomenon:** with near-uniform per-hospital
+   shortcut strengths (all ~0.82), hospital shift still collapses a CNN from 0.886
+   ID to 0.511 OOD — chance level. The staining/color channel is label-predictive
+   within every hospital yet fails across hospitals: the domain shift is real and
+   the model is fully on the shortcut.
+2. **Null-regime consistency:** hospital 4 carries (−0.002 ≈ 0) shortcut
+decorrelation, and the law predicts ≈0 gain from adding it; observed ≈0 (−0.05 ±
+0.21). Consistent with pointing "no decorrelation → no help"; but the
+   *weak-shortcut regime* of the law remains untested on real data because no
+   whole hospital provides a weak shortcut.
+
+Next (EXP18, same data, no new download): slide-level strength heterogeneity. The
+above used one strength per hospital; slides within hospital 4 vary in tumor content,
+so per-slide strengths should span a range. Pilot v2 ranks hospital-4 slides by
+strength and arms the paired design: add hospital-4 patches from WEAK-shortcut
+slides vs STRONG-shortcut slides → does delta(weak) > delta(strong)? This gives the
+law its missing real-data test across a strength range (with the slide-tumor-content
+confound reported alongside).

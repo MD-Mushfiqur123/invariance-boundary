@@ -70,7 +70,16 @@ In the linear-shortcut model we prove that the residual shortcut leak of V-REx a
 
 IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs 0.598) but extracts almost nothing from the decorrelated third environment (0.626), whereas V-REx gains +9 points (0.686). GroupDRO, which upweights worst environments but never breaks the shortcut's conditional, collapses to near-ERM OOD (0.165) — consistent with its design goal being different (minimax group risk) and with hardness reweighting being orthogonal to decorrelation (EXP13). All nine ColoredMNIST configurations were re-confirmed in a 10-seed GPU master run (EXP15); every configuration landed within 4 points of the 5-seed estimates, with V-REx-3env best at 0.686 ± 0.015 and, notably, IRMv1 slightly *losing* the small benefit it had at two environments.
 
----
+### Real-data pilot: Camelyon17-WILDS (hospital-shift histopathology)
+
+A pre-registered paired test of the law on public clinical data (v2-fieldfix harness, 3 seeds). Set-up: train on two wilds hospitals {0,3} vs {0,3,4}; evaluate on held-out patches (ID) and on the WILDS test hospital 2 (OOD). The scanner/staining shortcut proxy (linear probe on 8-dim channel statistics into the tumor label) measures nearly identical strength in every hospital: 0.825 / 0.819 / 0.820.
+
+| config | ID | OOD |
+|---|---|---|
+| ERM-2 hospitals | 0.886 ± 0.023 | 0.511 ± 0.117 |
+| ERM-3 hospitals | 0.895 ± 0.010 | 0.462 ± 0.111 |
+
+Two regimes register here. First, the core phenomenon replicates on real clinical data: a model with near-chance invariant structure sits at 0.89 in-distribution and collapses to 0.51 — chance — on a shifted hospital, while the color/staining channel is strongly label-predictive (≈0.82 probe) within every hospital. Second, the third hospital carries essentially zero shortcut decorrelation (gap −0.002), the law's null regime, and delivers ≈ nothing (ΔOOD −0.049 ± 0.205) — directionally consistent, though at 3 seeds the sign test is unpowered and formally inconclusive by design (the strength sat at the {base}-mean boundary we pre-declared uninformative). What remains untested on real data is the *weak-shortcut* regime: no entire hospital provides a low-strength third environment. A slide-level follow-up (EXP18) interrogates within-hospital 4 strength heterogeneity, arming the paired design with weak-vs-strong third-hospital slices from the same cached data.
 
 ## Discussion
 
@@ -80,7 +89,7 @@ IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs
 
 **Practical guidance.** Environment budget should buy *shortcut-breaking* slices of data — situations where the spurious feature's association with the label is weakened or severed (new sites, protocols, collection regimes) — not environments that merely shift the causal-feature marginals. The 2-week pilot design we propose for real data (train with vs without one decorrelated environment; measure held-out shift) is directly actionable for any team controlling data collection.
 
-**Limitations.** (i) All quantitative results are on synthetic/semi-synthetic data ≤64×64; the ColoredMNIST family is the field's standard prove-out, but real-world validation is required before scaling claims. (ii) The ColoredMNIST family (EXP15) and the synthetic battery (EXP16) use 10 seeds; remaining synthetic rounds used 3–5 seeds with un-tuned λ except where swept; real-data studies need ≥10 seeds and pre-registered analysis. (iii) The proven theory covers the linear-shortcut channel (complete proofs, numerically verified in EXP14); the nonlinear extension — local analysis around the encoder linearization — remains open and is the main requested contribution of a theory collaborator. (iv) "Only decorrelation matters" is a claim about this generator family; other shortcut structures (e.g., richly structured confounders) may behave differently.
+**Limitations.** (i) The quantitative synthetic results are on synthetic/semi-synthetic data ≤64×64; the ColoredMNIST family is the field's standard prove-out. The real-data evidence is a single 3-seed pilot on Camelyon17-WILDS (EXP17): a real-data replication of the shortcut-reliance collapse plus null-regime consistency for the law — but the weak-shortcut regime remains untested and the pilot's sign test is unpowered. (ii) The ColoredMNIST family (EXP15) and the synthetic battery (EXP16) use 10 seeds; remaining synthetic rounds used 3–5 seeds with un-tuned λ except where swept; real-data studies need ≥10 seeds and pre-registered analysis. (iii) The proven theory covers the linear-shortcut channel (complete proofs, numerically verified in EXP14); the nonlinear extension — local analysis around the encoder linearization — remains open and is the main requested contribution of a theory collaborator. (iv) "Only decorrelation matters" is a claim about this generator family; other shortcut structures (e.g., richly structured confounders) may behave differently.
 
 ---
 
@@ -96,7 +105,7 @@ IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs
 
 **Software.** PyTorch 2.15 (CPU); numpy 2.5; no randomness in evaluation paths beyond seeds; per-experiment scripts with fixed seed protocol; phase-diagram grid and all raw summary statistics in results.csv.
 
-**Data & code availability.** Everything in this repository; no external data beyond MNIST. Experiments consume ≈1 CPU-hour total.
+**Data & code availability.** Everything in this repository; synthetic experiments consume ≈1 CPU-hour total. The real-data pilot (EXP17) uses the public Camelyon17-WILDS dataset (~15 GB one-time download; CC0) via the wilds package and reuses its cache on reruns.
 
 ---
 
