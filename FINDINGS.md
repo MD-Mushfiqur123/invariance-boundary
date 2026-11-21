@@ -297,3 +297,38 @@ rho-imbalance sum(rho_e), which gives EXP11's "decorrelation is the active
 ingredient" a quantitative law, and predicts that a THIRD env helps only insofar
 as it reduces sum(rho) and increases Var(rho). Still open: nonlinear extension,
 global finite-lambda characterization, mu-harm scale (Prop 2).
+
+## Round 8 — EXP15: 10-seed GPU master run (Colab), all ColoredMNIST conclusions hold
+
+The full 9-config ColoredMNIST battery was re-run with 10 seeds on a Colab T4 GPU
+(self-contained harness `colab_master_run.py`; per-seed rows in colab_results.csv
+to be attached). Supersedes the 5-seed CPU estimates for the image experiments.
+
+| config        | ID (10 seeds)      | OOD (10 seeds)     | 5-seed CPU ref |
+|---------------|--------------------|--------------------|----------------|
+| ERM-2env      | 0.9199 +- 0.0106   | 0.1538 +- 0.0312   | 0.121          |
+| V-REx-2env    | 0.7596 +- 0.0171   | 0.5981 +- 0.0363   | 0.620          |
+| ERM-3env      | 0.8321 +- 0.0087   | 0.4468 +- 0.0345   | 0.425          |
+| V-REx-3env    | 0.7336 +- 0.0074   | 0.6860 +- 0.0146   | 0.680          |
+| IRMv1-2env    | 0.6731 +- 0.0272   | 0.6328 +- 0.0225   | 0.633          |
+| IRMv1-3env    | 0.6217 +- 0.0242   | 0.6258 +- 0.0431   | 0.638          |
+| GroupDRO-2env | 0.9169 +- 0.0112   | 0.1652 +- 0.0349   | 0.130          |
+| GroupDRO-3env | 0.8264 +- 0.0084   | 0.4661 +- 0.0343   | 0.448          |
+| ERM+DFR       | 0.8183 +- 0.0111   | 0.4722 +- 0.0238   | 0.478          |
+
+Reading:
+1. Every headline conclusion holds at 10 seeds: V-REx-3env best (0.686 +- 0.015,
+   lowest OOD variance in the battery), decorrelation remains the active ingredient
+   (ERM-3env 0.447 >> ERM-2env 0.154), IRMv1 insensitive to the decorrelated env
+   (0.633 -> 0.626 — slightly negative), GroupDRO-2env collapses to the shortcut
+   (0.165), DFR mid-pack (0.472).
+2. All configs within 4 points of their 5-seed CPU estimates — no publication-risk
+   drift; the paper's numbers were updated to the 10-seed values.
+3. One shift with more power: IRMv1-2env (0.633) now exceeds V-REx-2env (0.598) —
+   the 2-env "IRMv1 ~= V-REx" claim softens to "comparable"; the asymmetry claim is
+   about the 3-env response, which is unchanged and sharper (V-REx +9, IRMv1 -1).
+4. V-REx-3env's OOD sd (0.0146) is the smallest of all configs — the diversity
+   recipe is also the most reliable, useful for the "practical guidance" section.
+
+Gap list impact: item 4 (statistical power) now closed for the ColoredMNIST family
+(10 seeds, GPU); still open for synthetic (3-5) and any real-data work.

@@ -162,7 +162,7 @@ environment-conditional loss levels, not on decorrelation of s.
 | Σρ ≠ 0, finite λ ⇒ residual leak ∝ Σρ/λ, hurting on flip | EXP14 | exact 0 at Σρ=0; 1/λ scaling; ΔR +0.109 at λ=200 |
 | d ≤ 2 ⇒ zero-variance manifold with β̂_s ≠ 0; dynamics unconstrained | EXP1/EXP4/EXP13 (2-env) | ERM/REx below chance at ρ_test = −0.9; IRMv1 2env ≈ 3env |
 | μ-shift with ρ̄ ≥ 0 ⇒ no help, possible harm | EXP11 shift-only | −2.26 (hurts) |
-| V-REx exploits a decorrelated env; first-order IRMv1 need not | EXP13 | V-REx 0.620→0.680; IRMv1 0.633→0.638 |
+| V-REx exploits a decorrelated env; first-order IRMv1 need not | EXP13, EXP15 (10 seeds) | V-REx 0.598→0.686; IRMv1 0.633→0.626 |
 
 ## TODO for a full theory section
 

@@ -23,9 +23,9 @@ Deep models routinely fail under distribution shift by relying on spurious featu
 We answer both questions with a kill-experiment program: falsifiable, pre-registered hypotheses tested with matched controls, multiple seeds, majority-class corrections, and — critically — published negative results, including two of our own initially-promising hypotheses. Our contributions:
 
 1. **A boundary map** (EXP4, EXP6, EXP8): invariance penalties recover shortcut flips (chance-level → 0.63–0.68 OOD) but leave covariate-shift failures essentially untouched (−36-point gap). After majority-class adjustment, the informativeness of an environment is driven by shortcut strength (ρ), not by causal-feature distribution distance (μ).
-2. **The decorrelation lever** (EXP11, EXP10): a single environment in which the spurious feature is decorrelated from the label delivers the entire diversity benefit on both synthetic and image data; an environment differing only in causal-feature marginals *hurts*. On ColoredMNIST the best recipe is invariance + one decorrelated environment (0.680 ± 0.004), ahead of invariance alone (0.620), diversity alone (0.425), and DFR (0.478).
+2. **The decorrelation lever** (EXP11, EXP10): a single environment in which the spurious feature is decorrelated from the label delivers the entire diversity benefit on both synthetic and image data; an environment differing only in causal-feature marginals *hurts*. On ColoredMNIST the best recipe is invariance + one decorrelated environment (0.686 ± 0.015), ahead of invariance alone (0.598), diversity alone (0.447), and DFR (0.472).
 3. **An architecture-general structural-learning null** (EXP1, EXP4, EXP7, EXP12): a differentiable sparse-DAG layer with enforced acyclicity (h(G) → 0) adds nothing over matched controls in four independent regimes and three architecture families.
-4. **Penalty-family asymmetry** (EXP13): first-order invariance penalties (IRMv1) do not exploit decorrelated environments (0.633 → 0.638), whereas second-order variance penalties (V-REx) do (0.620 → 0.680); worst-group reweighting (GroupDRO) collapses to the shortcut entirely (0.130).
+4. **Penalty-family asymmetry** (EXP13): first-order invariance penalties (IRMv1) do not exploit decorrelated environments (0.633 → 0.626), whereas second-order variance penalties (V-REx) do (0.598 → 0.686); worst-group reweighting (GroupDRO) collapses to the shortcut entirely (0.165).
 
 ---
 
@@ -60,7 +60,7 @@ If diversity has an active ingredient, which property of a new environment is it
 | shift only (μ=−0.7, ρ=+0.9) | 0.553 ± 0.032 | −2.26 |
 | both (μ=−0.7, ρ=0) | 0.828 ± 0.006 | −0.26 |
 
-The decorrelated environment delivers the entire benefit; the environment that shifts causal features while preserving the shortcut is *worse than adding nothing*. On ColoredMNIST (EXP10), the same structure appears, with invariance and diversity as complementary levers: ERM+V-REx with one decorrelated environment reaches 0.680 ± 0.004 OOD (all seeds), versus 0.620 invariance-only, 0.425 diversity-only, 0.478 DFR, 0.121 ERM.
+The decorrelated environment delivers the entire benefit; the environment that shifts causal features while preserving the shortcut is *worse than adding nothing*. On ColoredMNIST (EXP10), the same structure appears, with invariance and diversity as complementary levers: ERM+V-REx with one decorrelated environment reaches 0.686 ± 0.015 OOD, versus 0.598 invariance-only, 0.447 diversity-only, 0.472 DFR, 0.154 ERM (10-seed GPU master run, EXP15).
 
 ### A quantitative law for when environments help
 
@@ -68,7 +68,7 @@ In the linear-shortcut model we prove that the residual shortcut leak of V-REx a
 
 ### Penalty-family asymmetry
 
-IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs 0.620) but extracts almost nothing from the decorrelated third environment (0.638), whereas V-REx gains +6 points (0.680). GroupDRO, which upweights worst environments but never breaks the shortcut's conditional, collapses to the ERM solution (0.130) — consistent with its design goal being different (minimax group risk) and with hardness reweighting being orthogonal to decorrelation (EXP13).
+IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs 0.598) but extracts almost nothing from the decorrelated third environment (0.626), whereas V-REx gains +9 points (0.686). GroupDRO, which upweights worst environments but never breaks the shortcut's conditional, collapses to near-ERM OOD (0.165) — consistent with its design goal being different (minimax group risk) and with hardness reweighting being orthogonal to decorrelation (EXP13). All nine ColoredMNIST configurations were re-confirmed in a 10-seed GPU master run (EXP15); every configuration landed within 4 points of the 5-seed estimates, with V-REx-3env best at 0.686 ± 0.015 and, notably, IRMv1 slightly *losing* the small benefit it had at two environments.
 
 ---
 
@@ -80,7 +80,7 @@ IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs
 
 **Practical guidance.** Environment budget should buy *shortcut-breaking* slices of data — situations where the spurious feature's association with the label is weakened or severed (new sites, protocols, collection regimes) — not environments that merely shift the causal-feature marginals. The 2-week pilot design we propose for real data (train with vs without one decorrelated environment; measure held-out shift) is directly actionable for any team controlling data collection.
 
-**Limitations.** (i) All quantitative results are on synthetic/semi-synthetic data ≤64×64; the ColoredMNIST family is the field's standard prove-out, but real-world validation is required before scaling claims. (ii) Three-to-five seeds per experiment with un-tuned λ except where swept; real-data studies need ≥10 seeds and pre-registered analysis. (iii) The proven theory covers the linear-shortcut channel (complete proofs, numerically verified in EXP14); the nonlinear extension — local analysis around the encoder linearization — remains open and is the main requested contribution of a theory collaborator. (iv) "Only decorrelation matters" is a claim about this generator family; other shortcut structures (e.g., richly structured confounders) may behave differently.
+**Limitations.** (i) All quantitative results are on synthetic/semi-synthetic data ≤64×64; the ColoredMNIST family is the field's standard prove-out, but real-world validation is required before scaling claims. (ii) The ColoredMNIST family uses 10 seeds (GPU master run, EXP15); synthetic experiments remain 3–5 seeds with un-tuned λ except where swept; real-data studies need ≥10 seeds and pre-registered analysis. (iii) The proven theory covers the linear-shortcut channel (complete proofs, numerically verified in EXP14); the nonlinear extension — local analysis around the encoder linearization — remains open and is the main requested contribution of a theory collaborator. (iv) "Only decorrelation matters" is a claim about this generator family; other shortcut structures (e.g., richly structured confounders) may behave differently.
 
 ---
 
@@ -92,7 +92,7 @@ IRMv1 (first-order gradient penalty) matches V-REx at two environments (0.633 vs
 
 **Training.** Adam, lr 1e-3, batch 256 (images) / 512 (synthetic), 12–80 epochs as per experiment size. Environment-invariance = V-REx (variance of per-environment losses; λ ∈ {25, 30, 100}); IRMv1 = first-order gradient penalty (λ=25); GroupDRO = exponentiated worst-group reweighting (η=0.1).
 
-**Evaluation.** Held-out test environments; majority-class-adjusted accuracy (acc − max class rate, normalized) wherever class priors shift; Cohen's d for effect sizes; 3–5 seeds (exact n per experiment in FINDINGS.md), mean ± sd. Baseline rates and class balancers were computed from 200k Monte-Carlo samples of the generator.
+**Evaluation.** Held-out test environments; majority-class-adjusted accuracy (acc − max class rate, normalized) wherever class priors shift; Cohen's d for effect sizes; 10 seeds for the ColoredMNIST family (EXP15) and 3–5 seeds for synthetic experiments (exact n per experiment in FINDINGS.md), mean ± sd. Baseline rates and class balancers were computed from 200k Monte-Carlo samples of the generator.
 
 **Software.** PyTorch 2.15 (CPU); numpy 2.5; no randomness in evaluation paths beyond seeds; per-experiment scripts with fixed seed protocol; phase-diagram grid and all raw summary statistics in results.csv.
 

@@ -13,7 +13,7 @@ contributes nothing measurable in any of four tested regimes.*
 
 | File | Purpose |
 |---|---|
-| `FINDINGS.md` | All results (EXP1–EXP14), verdicts, threats to validity, next steps |
+| `FINDINGS.md` | All results (EXP1–EXP15), verdicts, threats to validity, next steps |
 | `LITERATURE_DELTA.md` | Novelty gap analysis vs 2022–2025 literature |
 | `data_scm.py` | Synthetic SCM data (causal + spurious + nuisance latents, nonlinear mixing) |
 | `data_colored_mnist.py` | ColoredMNIST pipeline (2-channel, shortcut flip OOD) |
@@ -55,3 +55,12 @@ python exp8_phase_diagram.py    # EXP8 (3 seeds, longest)
 ```
 
 MNIST files are fetched from `ossci-datasets.s3.amazonaws.com` by `data_colored_mnist.py`.
+
+## Colab master run (10 seeds, GPU)
+
+```python
+!wget -qO colab_master_run.py https://raw.githubusercontent.com/MD-Mushfiqur123/invariance-boundary/346ad96/colab_master_run.py
+!python colab_master_run.py --seeds 10   # ~30 min on a free T4
+```
+
+Reported EXP15 numbers in `results.csv` and the paper draft come from this run.
