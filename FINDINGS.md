@@ -571,3 +571,23 @@ Reading:
    predicts which targets collapse (EXP19). Next: 10-seed hardening of EXP19
    (--seeds 10) to stabilize r and resolve the h2 bimodality, then the
    real-data section of the paper is complete for this arc.
+
+### EXP19 HARDENED (10 seeds) — r sustained; h2 below baseline; bimodal collapse confirmed as open question
+| target | CNN acc (10 seeds) | excess | predicted |
+|---|---|---|---|
+| h0 | 0.863±0.045 | +0.350 | +0.178 |
+| h1 | 0.800±0.015 | +0.292 | +0.222 |
+| h2 | 0.481±0.154 | **-0.029** | +0.027 |
+| h3 | 0.913±0.023 | +0.392 | +0.319 |
+| h4 | 0.649±0.076 | +0.147 | +0.013 |
+
+r = +0.883 (vs 3-seed +0.905) — the diagnostic survives seed inflation. h2's mean
+drops BELOW the majority baseline with ±0.154 sd: per-seed accuracy spans roughly
+[0.30, 0.75] territory — collapse is not only flagged but sometimes inverted,
+consistent with a flipped shortcut mapping being actively exploited (the rho-flip
+signature). h4 gap (predicted +0.013 vs observed +0.147) is unchanged — the 8-dim
+color proxy does not see the histology component the CNN partially transfers on.
+Registered follow-ups: (a) richer proxy feature set (color histograms + patch
+texture stats) to close the h4 gap; (b) RxRx1 replication as second dataset.
+Real-data arc CLOSED for this paper: EXP17 collapse -> EXP18 no weak env -> EXP18b
+mapping shift + two blocks -> EXP19 hardened prospective diagnostic (r = +0.88).

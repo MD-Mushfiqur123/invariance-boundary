@@ -35,7 +35,9 @@ contributes nothing measurable in any of four tested regimes.*
 | `COLLABORATION_EMAIL.md` | Ready-to-send outreach email template |
 | `colab_synthetic_master.py` | Self-contained 10-seed GPU harness for the synthetic SCM battery |
 | `colab_wilds_pilot.py` | EXP17: real-data paired pilot on Camelyon17-WILDS (hospital-shift; v2-fieldfix) |
-| `colab_wilds_slidepilot.py` | EXP18: slide-level weak-vs-strong shortcut arms within hospital 4 (same cached data) |
+| `colab_wilds_slidepilot.py` | EXP18: slide-level strengths in hospital 4 (negative design result) |
+| `colab_wilds_transfer.py` | EXP18b: cross-hospital shortcut transfer matrix (mapping-shift regime: blocks {0,1,3} vs {2,4}) |
+| `colab_wilds_predict.py` | EXP19: transfer matrix prospectively predicts per-hospital CNN collapse (r=+0.88, 10 seeds) |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 

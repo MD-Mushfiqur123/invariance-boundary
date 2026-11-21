@@ -92,3 +92,10 @@ EXP19,cnn-target-h2,0.5327,0.1569,,,+0.023 excess vs predicted transfer exp +0.0
 EXP19,cnn-target-h3,0.9173,0.0156,,,+0.397 excess vs predicted transfer exp +0.319 (3 seeds, h3 = hospital id; pools disjoint)
 EXP19,cnn-target-h4,0.6468,0.0882,,,+0.145 excess vs predicted transfer exp +0.013 (3 seeds, h4 = hospital id; pools disjoint)
 EXP19,correlation,,,,,Pearson r +0.905 / Spearman +0.800 over 5 targets; unseen {1,2,4} r +0.887 / rho +0.500; order preserved h3>h0>h1>>h4>h2; flagged-excess~0 targets = exactly the failures
+EXP19,cnn10-target-h0,0.8627,0.0449,,,+0.350 excess vs pred +0.178 (10-seed hardened run)
+EXP19,cnn10-target-h1,0.8002,0.0145,,,+0.292 excess vs pred +0.222
+EXP19,cnn10-target-h2,0.4808,0.1538,,,-0.029 excess vs pred +0.027 (below majority baseline; bimodal per-seed)
+EXP19,cnn10-target-h3,0.9126,0.0231,,,+0.392 excess vs pred +0.319
+EXP19,cnn10-target-h4,0.6487,0.0756,,,+0.147 excess vs pred +0.013 (probe under-predicts; histology component)
+EXP19,cnn10-correlation,,,,,10-seed hardening: Pearson r +0.883 / Spearman +0.800 (5 targets); unseen {1,2,4} r +0.817; r sustained vs 3-seed +0.905
+EXP19,hardening-verdict,,,,,10-seed run sustains r (+0.883); h2 mean below majority baseline (-0.029, sd 0.154) = bimodal/inverted collapse; h4 under-prediction unchanged (proxy gap); arc closed, follow-ups registered

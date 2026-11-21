@@ -39,3 +39,36 @@ for ax in (a1, a2, a3, a4):
 fig.tight_layout()
 fig.savefig("results_all.png", dpi=160)
 print("saved results_all.png")
+
+def realdata_fig():
+    import re
+    pred, cnn, sd = {}, [], []
+    for h in range(5):
+        for row in ROWS:
+            if row["exp"] == "EXP19" and row["config"] == f"cnn10-target-h{h}":
+                cnn.append(float(row["id"]))
+                sd.append(float(row["sd_id"]))
+                pred[h] = float(re.search(r"pred ([+-][\d.]+)", row["note"]).group(1))
+    excess = [c - 0.5 for c in cnn]
+    fig, (b1, b2) = plt.subplots(1, 2, figsize=(11, 4.2))
+    for h in range(5):
+        b1.scatter(pred[h], excess[h], s=90, color="#d1704f")
+        b1.annotate(f"h{h}", (pred[h], excess[h]), textcoords="offset points", xytext=(6, 4), fontsize=8)
+    xs = np.linspace(0, 0.34, 10)
+    b1.plot(xs, xs, ls="--", c="gray", lw=0.8)
+    b1.set_xlabel("predicted transfer excess (probe matrix)")
+    b1.set_ylabel("observed CNN excess (10 seeds)")
+    b1.set_title("EXP19: 2-minute probe predicts deep-model OOD\nPearson r = +0.883, Spearman +0.800", fontsize=9)
+    b1.set_xlim(-0.03, 0.34)
+    b1.set_ylim(-0.10, 0.44)
+    b1.axhline(0, ls=":", c="gray", lw=0.8)
+    b2.bar([f"h{h}" for h in range(5)], cnn, yerr=sd, capsize=4, color=["#7a9e7e", "#7a9e7e", "#d1704f", "#7a9e7e", "#e0b050"])
+    b2.axhline(0.5, ls="--", c="gray", lw=0.8)
+    b2.set_ylim(0, 1)
+    b2.set_title("Camelyon17-WILDS CNN accuracy by hospital\n(train {h0,h3}; 10 seeds)", fontsize=9)
+    fig.tight_layout()
+    fig.savefig("exp19_realdata.png", dpi=160)
+    print("saved exp19_realdata.png")
+
+
+realdata_fig()
