@@ -612,3 +612,44 @@ Protocol (pre-registered, mirrors EXP19):
   siRNA texture patterns — a low-but-positive r is not a failure of the diagnostic if
   the target ORDERING is preserved); test-split experiment coverage per cell type sets
   the actual target count (harness reports it); download is ~7.4 GB.
+
+### EXP20 RESULT (10 seeds, RxRx1-WILDS real run) — weak, floor-bound replication; direction consistent, power inadequate
+| target | role | CNN acc (10 seeds) | pred (mean of 3 sources) |
+|---|---|---|---|
+| t0 (exp1) | heldout-train | 0.0041+-0.0025 | 0.003 |
+| t1 (exp12) | heldout-train | 0.0040+-0.0017 | 0.010 |
+| t2 (exp36) | heldout-train | 0.0045+-0.0012 | 0.010 |
+| t3 (exp8) | test-split | 0.0031+-0.0005 | 0.002 |
+| t4 (exp28) | test-split | 0.0041+-0.0012 | 0.004 |
+| t5 (exp43) | test-split | 0.0034+-0.0017 | 0.005 |
+| t6 (exp50) | test-split | 0.0027+-0.0008 | 0.002 |
+
+Chance = 1/1139 = 0.0009. Every target sits 3-5x chance with sd comparable to the
+mean: the CNN is at the FLOOR everywhere. Pearson r = +0.661 / Spearman +0.571 over
+all 7 targets; unseen (test-split) r = +0.678 / Spearman +0.800.
+
+Pre-registered verdict rule applied: r is neither ~0 (clean kill) nor comparable to
+Camelyon17's +0.88 (clean replication) — the run is WEAK, FLOOR-BOUND, DIRECTIONALLY
+CONSISTENT (positive r retained; on the truly-unseen test-split targets the ordering
+is largely preserved, Spearman +0.800). Two design degradations DID occur and are
+recorded as the primary explanation:
+  (1) CNN data starvation: RxRx1 experiments have ~2450 metadata rows each, so the
+      disjoint 1500-image probe pool left only 964 (not the intended 4000) per
+      source for CNN training — 2900 images total for 1139 classes at 96x96 with a
+      torso CNN; the model never leaves the floor, so any correlation is compressed
+      into a ~1-point accuracy range with overlapping sds.
+  (2) Predictor washout: the single transfer signal RxRx1 emits is SAME-CELL-TYPE
+      (src0->t0 0.006, src1->t1 0.028, src2->t2 0.023 vs ~0.001 across cell types
+      — 6-28x structure), and the predictor averages it against two cross-cell-type
+      zeros, destroying exactly the component that varies.
+Substantive finding, independent of the diagnostic: unlike Camelyon17's two-block
+structure, RxRx1 shows NO compatible experiment block at all — cross-experiment
+shortcut transfer is uniformly at/near chance. In the paper's vocabulary, RxRx1 is
+a universal mapping-shift floor regime: per the theory, no recombination of these
+environments can buy OOD accuracy, and indeed the CNN collapses everywhere.
+Registered follow-up (not run; recorded honestly as beyond free-T4/96x96 reach):
+same-cell-type predictor (mean only over matching-cell-type sources), probe_n <= 600
+to release train images, richer proxy; if that still floors, the diagnostic question
+is moot because there is nothing above the floor to predict.
+Research program CLOSED at 20 experiments: synthetic SCM + ColoredMNIST + Camelyon17
++ RxRx1, 4 data regimes, all pre-registered, negatives and floor results included.

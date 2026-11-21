@@ -83,8 +83,11 @@ EXP15/16-এর মতো paired design ওখানেই চালানো �
 `colab_wilds_pilot.py` হারনেস বানাব। **আপডেট: পাইলট এখন চলে গেছে (EXP17)** —
 WILDS Camelyon17-এ hospital-shift collapse রেপ্লিকেট হয়েছে (ID 0.886 → OOD 0.511,
 chance), আর তৃতীয় হাসপাতাল null-regime (gap −0.002 → ΔOOD ≈ 0) আইনের সাথে
-সামঞ্জস্যপূর্ণ। slide-level EXP18 চলছে; তাই "real-data pilot" স্ট্যাটাস =
-**in progress, real data সহ**।
+সামঞ্জস্যপূর্ণ। slide-level EXP18, ট্রান্সফার-ম্যাট্রিক্স EXP18b, প্রোসপেক্টিভ
+diagnostic EXP19 (r = +0.88, 10 seeds) এবং দ্বিতীয় ডেটাসেট RxRx1-এর
+প্রি-রেজিস্টার্ড রেপ্লিকেশন EXP20 (floor-bound weak replication, unseen-target
+Spearman +0.800) সম্পন্ন; তাই "real-data pilot" স্ট্যাটাস =
+**COMPLETE, ৪টি ডেটা রেজিম, ২০টি প্রি-রেজিস্টার্ড এক্সপেরিমেন্ট**।
 
 ## C. Cold email — পরিচিত হওয়া লাগে না
 

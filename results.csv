@@ -99,3 +99,13 @@ EXP19,cnn10-target-h3,0.9126,0.0231,,,+0.392 excess vs pred +0.319
 EXP19,cnn10-target-h4,0.6487,0.0756,,,+0.147 excess vs pred +0.013 (probe under-predicts; histology component)
 EXP19,cnn10-correlation,,,,,10-seed hardening: Pearson r +0.883 / Spearman +0.800 (5 targets); unseen {1,2,4} r +0.817; r sustained vs 3-seed +0.905
 EXP19,hardening-verdict,,,,,10-seed run sustains r (+0.883); h2 mean below majority baseline (-0.029, sd 0.154) = bimodal/inverted collapse; h4 under-prediction unchanged (proxy gap); arc closed, follow-ups registered
+EXP20,probe-matrix,,,,,RxRx1 10-seed: same-cell-type cross-experiment probe transfer (0.006-0.028) >> cross-cell-type (0.001); no compatible block like Camelyon17 block A — universal mapping-shift floor
+EXP20,cnn-target-t0,0.0041,0.0025,,heldout-train exp1; pred 0.003 (chance = 1/1139 = 0.0009)
+EXP20,cnn-target-t1,0.0040,0.0017,,,heldout-train exp12; pred 0.010
+EXP20,cnn-target-t2,0.0045,0.0012,,,heldout-train exp36; pred 0.010
+EXP20,cnn-target-t3,0.0031,0.0005,,,test-split exp8; pred 0.002
+EXP20,cnn-target-t4,0.0041,0.0012,,,test-split exp28; pred 0.004
+EXP20,cnn-target-t5,0.0034,0.0017,,,test-split exp43; pred 0.005
+EXP20,cnn-target-t6,0.0027,0.0008,,,test-split exp50; pred 0.002
+EXP20,correlation,,,,,Pearson r +0.661 / Spearman +0.571 over all 7 targets; unseen (test-split) r +0.678 / Spearman +0.800
+EXP20,verdict,,,,,weak floor-bound replication: direction consistent + unseen ordering preserved (Spearman +0.800) but all targets at/near chance floor (CNN 0.0027-0.0045, sd~mean); two documented design degradations (CNN data-starved 964/exp not 4000; predictor mean across cell types washed out the cell-type-specific signal) — not a clean kill, not a clean confirm; clean replication infeasible at 96x96 free-T4 scale; follow-up registered (same-cell-type predictor, probe_n<=600, richer proxy)

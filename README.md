@@ -38,7 +38,7 @@ contributes nothing measurable in any of four tested regimes.*
 | `colab_wilds_slidepilot.py` | EXP18: slide-level strengths in hospital 4 (negative design result) |
 | `colab_wilds_transfer.py` | EXP18b: cross-hospital shortcut transfer matrix (mapping-shift regime: blocks {0,1,3} vs {2,4}) |
 | `colab_wilds_predict.py` | EXP19: transfer matrix prospectively predicts per-hospital CNN collapse (r=+0.88, 10 seeds) |
-| `colab_rxrx1_pilot.py` | EXP20: pre-registered replication of the transfer diagnostic on RxRx1-WILDS (multiclass siRNA probe, 1139 classes; ~7.4 GB download) |
+| `colab_rxrx1_pilot.py` | EXP20: pre-registered second-dataset replication on RxRx1-WILDS (multiclass siRNA probe, 1139 classes; ~7.4 GB download). RESULT: universal mapping-shift floor — weak, floor-bound replication (unseen-target Spearman +0.800), see FINDINGS |
 | `results.csv`, `make_figures.py` | All results in plain CSV + figure regeneration |
 | `PAPER_DRAFT.md` | Nature MI-format paper draft (title, abstract, contributions, gap list) |
 
