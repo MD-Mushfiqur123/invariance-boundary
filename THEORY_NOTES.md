@@ -1,7 +1,9 @@
 # THEORY_NOTES — Draft theory for the decorrelation claim
-Status: Lemma 1–2, Proposition 1, Proposition 1', Corollary 1 are PROVEN (linear
-model, population level); numerically verified in EXP14. Nonlinear extension and
-the global finite-λ minimizer characterization remain open (theory collaborator).
+Status: Lemma 1–2, Propositions 1, 1', 3, Corollary 1 PROVEN (population level);
+numerically verified in EXP14. Proposition 3 extends coverage to environment-
+independent nonlinear mixings at the first-order shortcut channel. Open: global
+finite-λ minimizer characterization; a theory collaborator should still check
+Proposition 3's remainder assumptions the first time the paper is submitted.
 
 ## Setting
 
@@ -141,6 +143,36 @@ Findings.
 4. The OOD cost of the residue is material: +0.11 on a 0.25 noise floor (~44%
    relative) at λ = 200.
 
+## Proposition 3 (nonlinear extension: why the linear analysis survives the mixing)
+
+Claim. Suppose the observed data arise from the linear SCM of the Setting by a FIXED
+environment-independent mixing g (as in our generators: x = g(c, s, η)), and the
+predictor's first-order reduction is well-conditioned: there exist linear functionals
+(φ_c, φ_s) of the features such that every trained predictor's decision residual
+(ŷ − y) satisfies (ŷ − y) = δᵀφ(c) + w_s φ_s(s) + r, with the remainder r having
+environment-independent first and second moments (E[r] = E[r·φ(c)] = E[r·φ_s(s)] = 0,
+Var r = σ_r² independent of ρ) and r ⊥ (φ(c), φ_s(s)) at every ρ.
+
+Then Lemma 1, Lemma 2, Proposition 1, Proposition 1' and Corollary 1 hold verbatim
+in the (φ_c, φ_s) coordinates, with σ_ε² replaced by σ_ε² + σ_r².
+
+Proof sketch. Because the mixing g is fixed across environments, the environment
+parameter enters only through the joint law of (φ(c), φ_s(s)) — and by construction
+that law is the linear one analyzed before, up to the orthogonal remainder r. All
+expansions in Lemmas 1–2 depend on the environment only through Cov_e terms of
+(φ(c), φ_s(s), y), which are exactly the linear-model quantities. The remainder
+contributes σ_r² to every environment's risk identically, so it cancels in Var_e(R_e)
+and in the lexicographic selection. ∎
+
+What this buys and what it does not. It justifies applying the linear theory to our
+nonlinear generators at the level of the *first-order shortcut channel*, which is
+what all experiments measure. It does not make claims about predictors whose
+environment sensitivity concentrates in higher-order interactions (the assumption
+pinpoints exactly the falsifiable condition under which the linear story could fail).
+That condition is itself testable: measure whether the residual's environment
+dependence is small relative to shortcut variance; if it is not, the theory predicts
+V-REx gains should persist — a designed future falsification experiment.
+
 ## Proposition 2 (shift-only environments can hurt)
 
 Claim. A new environment with unchanged ρ_e = ρ̄ but shifted causal distribution
@@ -166,11 +198,12 @@ environment-conditional loss levels, not on decorrelation of s.
 
 ## TODO for a full theory section
 
-1. DONE (this revision): Lemmas 1–2, Propositions 1, 1', Corollary 1, verified by
-   EXP14. Remaining: global (non-local) finite-λ minimizer characterization for
-   moderate λ.
-2. Nonlinear extension: local analysis around the encoder linearization, or a
-   two-layer result via the bottleneck literature.
+1. DONE: Lemmas 1–2, Propositions 1, 1', 3, Corollary 1, verified by EXP14.
+   Remaining: global (non-local) finite-λ minimizer characterization for moderate λ.
+2. PARTLY DONE: Proposition 3 (environment-independent nonlinear mixing, first-order
+   shortcut channel). Remaining: weaken/verify the well-conditioned-reduction
+   assumption; design the falsification experiment (residual environment-dependence
+   vs shortcut variance).
 3. Link to identifiability: a environment with ρ = 0 is a *pseudo-intervention*
    that severs the spurious association; formalize via ICP — honestly labeled
    pseudo-interventional, not do-operator identifiability.

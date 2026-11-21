@@ -332,3 +332,20 @@ Reading:
 
 Gap list impact: item 4 (statistical power) now closed for the ColoredMNIST family
 (10 seeds, GPU); still open for synthetic (3-5) and any real-data work.
+
+## Round 9 — completion push (theory extension + synthetic GPU harness + outreach)
+
+1. **Proposition 3 (nonlinear extension)** added to THEORY_NOTES.md: for any
+   environment-independent mixing with a well-conditioned first-order shortcut
+   channel, Lemmas 1-2 and Propositions 1/1'/Corollary 1 transfer verbatim with
+   sigma_e^2 -> sigma_e^2 + sigma_r^2. Turns the "nonlinear extension open" gap
+   into a precise, testable assumption rather than an open void.
+2. **colab_synthetic_master.py**: self-contained 10-seed GPU harness for the full
+   synthetic battery (ERM/V-REx x 2/3 env, SCIN-full/noDAG/noMask, Cohen's d,
+   causal-mask recall). Smoke-tested (1 seed, reduced scale): runs end-to-end,
+   mask recall 1.0, DAG null reproduces. Ready for the user's Colab.
+3. **COLLABORATION_EMAIL.md**: ready-to-send outreach email template.
+
+Status after this round: everything autonomously completable by the agent is DONE.
+Remaining items are strictly user-dependent: merge decision on PR #1, sending the
+proposal, verifying Prop 3 assumptions with a theory partner, real-data pilot runs.
