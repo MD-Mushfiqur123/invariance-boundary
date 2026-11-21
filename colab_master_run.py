@@ -166,7 +166,7 @@ def acc(model, imgs, labels, bs=2048):
 
 
 def retrain_head_dfr(model, e1, epochs, bs, lr, seed):
-    m = CNN()
+    m = CNN().to(DEVICE)
     m.backbone.load_state_dict(model.backbone.state_dict())
     for p in m.backbone.parameters():
         p.requires_grad = False
